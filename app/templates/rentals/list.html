@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if rentals %}
+<h3>Wypożyczone filmy</h3>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Film</th>
+            <th scope="col">Użytkownik</th>
+            <th scope="col">Data wypożyczena</th>
+            <th scope="col">Data planowanego zwrotu</th>
+            <th scope="col"> Zwrot </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for rental in rentals %}
+          <tr>
+            <td scope="col-2"> {{rental.id}} </td>
+            <td scope="col-2"> {{rental.film}} </td>
+            <td scope="col-2"> {{rental.user}} </td>
+            <td scope="col-2"> {{rental.rent_date}} </td>
+            <td scope="col-2"> {{rental.planned_return_date}} a</td>
+            <td scope="col-2"><a class="btn btn-dark" href="{% url 'film_return' rental.id %}"> Zwrot </a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+{% else %}
+    Aktualnie nic nie jest wypozyczone.
+{% endif %}
+
+{% endblock %}

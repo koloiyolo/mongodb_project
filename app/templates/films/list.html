@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<a class="btn btn-dark" href="{% url 'film_add' %}">
+  Dodaj
+</a>
+<br/>
+<br/>
+{% include 'films/table.html' with films=films %}
+<br/>
+{% endblock %}

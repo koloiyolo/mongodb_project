@@ -1,0 +1,57 @@
+{% extends 'base.html' %} {% block content %}
+<div class="col-md-12 offset-md-0">
+    {% if user.is_authenticated %}
+    <br/>
+    {% if rentals %}
+    <h3>Twoje wypożyczone filmy</h3>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Film</th>
+            <th scope="col">Data wypożyczena</th>
+            <th scope="col">Data planowanego zwrotu</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for rental in rentals %}
+          <tr>
+            <td >{{rental.id}}</td>
+            <td >{{rental.film}}</td>
+            <td >{{rental.rent_date}}</td>
+            <td >{{rental.planned_return_date}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    {% endif %}
+    <br/>
+    {% if films %}
+    {% include 'films/table.html' with films=films %}
+    {% endif %}
+
+
+
+
+
+    {% else %}
+    <br />
+    <h1>Log in</h1>
+    <br />
+    <form method="POST" action="{% url 'home' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Your username</label>
+            <input type="text" class="form-control" name="username" placeholder="Your name" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Your password</label>
+            <input type="password" class="form-control" name="password" placeholder="Password" required />
+        </div>
+        <button type="submit" class="btn btn-dark"> Log in </button>
+        <a class="btn btn-secondary" href="{% url 'register' %}"> Sign up instead </a>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

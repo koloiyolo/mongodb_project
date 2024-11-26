@@ -1,0 +1,77 @@
+<h3>Filmy</h3>
+
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="heading">
+            <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse"
+                aria-expanded="false"
+                >
+                <div class="container text-start">
+                    <div class="row">
+                        <div class="col">#</div>
+                        <div class="col">Tytuł</div>
+                        <div class="col">Gatunek</div>
+                        <div class="col">Reżyser</div>
+                        <div class="col">Czas Trwania</div>
+                        <div class="col">Ocena</div>
+                        <div class="col">Data dodania</div>
+                    </div>
+                </div>
+            </button>
+        </h2>
+    </div>
+    {% if films %}
+    {% for film in films %}
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="heading{{ film.id }}">
+            <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse{{ film.id }}"
+                >
+                <div class="container text-start">
+                    <div class="row">
+                        <div class="col">{{ film.id }}</div>
+                        <div class="col">{{film.title}}</div>
+                        <div class="col">{{film.genre}}</div>
+                        <div class="col">{{film.director}}</div>
+                        <div class="col">{{film.duration}}</div>
+                        <div class="col">{{film.rating}}</div>
+                        {% comment %} 
+                        <div class="col">Opis</div>
+                        <div class="col">Aktorzy</div>
+                        {% endcomment %}
+                        <div class="col">{{film.added_on}}</div>
+                    </div>
+                </div>
+            </button>
+        </h2>
+        <div id="collapse{{ film.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <p><strong>Opis: </strong>{{film.description}}</p>
+              <p><strong>Aktorzy: </strong>Aktorzy</p>
+              <br/>
+              <div class="col btn-group" role="group">
+                <a class="btn btn-dark" href={% url 'film_rent' film.id %}>
+                  Wypożycz
+                </a>
+                {% if user.is_staff %}
+                <a class="btn btn-dark" href={% url 'film_edit' film.id %}>
+                  Edytuj
+                </a>
+                <a class="btn btn-danger" href={% url 'film_remove' film.id %}>
+                  Usuń
+                </a>
+                {% endif %}
+              </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>

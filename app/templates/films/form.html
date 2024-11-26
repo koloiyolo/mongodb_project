@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<html>
+<head>
+    <title>Dodaj film</title>
+</head>
+<body>
+    <h1>Dodaj lub edytuj film</h1>
+    <form method="post" class="form-control">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Zapisz</button>
+    </form>
+</body>
+</html>
+
+{% endblock %}
