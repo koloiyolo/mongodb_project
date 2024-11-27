@@ -1,8 +1,12 @@
 #!/bin/bash
 
-# run using crontab
+# remember to set executable permissions, example:
+# sudo chmod 755 cicd.sh
 
-# set env variable as 
+# run using crontab, example in your "/etc/crontab" file:
+# * * * * * root /path/to/your/project/cicd.sh
+
+# set env variable as: 
 # export PROJECT_PATH="/path/to/your/project"
 
 PROJECT_PATH=${PROJECT_PATH:-"/home/opc/mongodb_project"}
