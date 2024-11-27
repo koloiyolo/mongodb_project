@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<h3>Użytkownicy</h3>
 <br/>
-<a class="btn btn-dark" href="{% url 'register' %}">
-	Dodaj
-  </a>
-<br/>
+<div class="input-group">
+	<a class="btn btn-dark" href="{% url 'register' %}">
+	  Dodaj
+	</a>
+	<form method="get">
+	  <div class="input-group">
+		<input type="text" name="search" value="{{ q }}" placeholder=" Wyszukaj użytkownika ">
+		<button class="btn btn-dark" type="submit">Szukaj</button>
+	  </div>
+	</form>
+</div>
 <br/>
 <div class="accordion" id="accordionExample">
 	<div class="accordion-item">

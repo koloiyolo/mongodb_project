@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-<a class="btn btn-dark" href="{% url 'film_add' %}">
-  Dodaj
-</a>
+<h3>Filmy</h3>
 <br/>
+<div class="input-group">
+  <a class="btn btn-dark" href="{% url 'film_add' %}">
+    Dodaj
+  </a>
+  <form method="get">
+    <div class="input-group">
+      <input type="text" name="search" value="{{ q }}" placeholder=" Wyszukaj">
+      <button class="btn btn-dark" type="submit">Szukaj</button>
+    </div>
+  </form>
+</div>
 <br/>
 {% include 'films/table.html' with films=films %}
 <br/>

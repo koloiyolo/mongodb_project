@@ -3,6 +3,7 @@ from .forms import SignUpForm, FilmForm, UserDataForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from .models import Film, Rental, UserData
 
@@ -30,7 +31,7 @@ def home(request):
 
     else:
         return render(request, 'users/home.html', { 'films':films, 'rentals':rentals})
-    return render(request, 'users/home.html', { 'films':films, 'rentals':rentals})
+    return redirect('home')
 
 def user_logout(request):
     logout(request)
@@ -60,6 +61,16 @@ def user_register(request):
 def user_list(request):
     if request.user.is_authenticated:
         users = User.objects.all()
+        q = request.GET.get('search', '')
+        if q is not None:
+            users = User.objects.filter(
+                username__icontains=q
+                ) | User.objects.filter(
+                first_name__icontains=q
+                ) | User.objects.filter(
+                last_name__icontains=q
+                )
+
         return render(request, 'users/list.html', { 'users':users})
     else:
         return redirect('home')
@@ -103,16 +114,29 @@ def edit(request):
             return render(request, 'users/form.html', {'form':form})
     else:
         return render(request, 'users/form.html', {'form':form})
+    return redirect('home')
 
 # Films
 def film_list(request):
     if request.user.is_authenticated:
-        films = Film.objects.all()
+        users = None
+        if request.user.is_staff:
+            users = User.objects.all()
 
-        return render(request, 'films/list.html', { 'films':films})
-    else:
-        return redirect('home')
-    return render(request, 'films/list.html', { 'films':films})
+        films = Film.objects.all()
+        q = request.GET.get('search', '')
+        if q is not None:
+            films = Film.objects.filter(
+                title__icontains=q
+            ) | Film.objects.filter(
+                genre__icontains=q
+            )
+
+        return render(request, 'films/list.html', { 
+            'films':films,
+            'users': users})
+    
+    return redirect('home')
 
 def film_add(request):
     if request.user.is_authenticated:
@@ -157,10 +181,32 @@ def film_remove(request, pk):
 
 def film_rent(request, pk):
     if request.user.is_authenticated:
+        if Rental.objects.filter(user=request.user).count() >= 3:
+            messages.success(request, "Użytkownik przekroczył limit wypożyczeń")
+            return redirect('film_list')
+
         film = Film.objects.get(id=pk)
         rental = Rental.objects.filter(user=request.user, film=film).first()
         if rental is None:
             Rental.objects.create(user=request.user, film=film)
+            messages.success(request, "Film wypożyczony")
+        else:
+            messages.success(request, "Film już został wypożyczony wcześniej")
+        return redirect('film_list')
+    else:
+        return redirect('home')
+
+def film_rent_as(request, film, user):
+    if request.user.is_authenticated:
+        user = User.objects.get(id=user)
+        if Rental.objects.filter(user=user).count() >= 3:
+            messages.success(request, "Użytkownik przekroczył limit wypożyczeń")
+            return redirect('film_list')
+
+        film = Film.objects.get(id=film)
+        rental = Rental.objects.filter(user=user, film=film).first()
+        if rental is None:
+            Rental.objects.create(user=user, film=film)
             messages.success(request, "Film wypożyczony")
         else:
             messages.success(request, "Film już został wypożyczony wcześniej")
@@ -180,20 +226,48 @@ def film_return(request, pk):
 def rental_list(request):
     if request.user.is_authenticated:
         rentals = Rental.objects.all()
-
-        return render(request, 'rentals/list.html', { 'rentals':rentals })
+        users = User.objects.all()
+        q = request.GET.get('search', '')
+        if q:
+            rentals = rentals.filter(
+                Q(user__username__icontains=q) |
+                Q(user__first_name__icontains=q) |
+                Q(user__last_name__icontains=q) |
+                Q(film__title__icontains=q) |
+                Q(film__genre__icontains=q)
+            )
+            
+        
+        return render(request, 'rentals/list.html', {
+             'rentals':rentals,
+             'users':users
+             })
     else:
         return redirect('home')
-    return render(request, 'rentals/list.html', { 'rentals':rentals })
+    return redirect('home')
 
 def rental_list_user(request, pk):
     if request.user.is_authenticated:
         user = User.objects.get(id=pk)
+        users = User.objects.all()
         rentals = Rental.objects.filter(user=user)
-        return render(request, 'rentals/list.html', { 'rentals':rentals })
+        q = request.GET.get('search', '')
+        if q:
+            rentals = rentals.filter(
+                Q(user__username__icontains=q) |
+                Q(user__first_name__icontains=q) |
+                Q(user__last_name__icontains=q) |
+                Q(film__title__icontains=q) |
+                Q(film__genre__icontains=q)
+            )
+
+        return render(request, 'rentals/list.html', {
+             'rentals':rentals,
+             'users':users
+             })
     else:
         return redirect('home')
-    return render(request, 'rentals/list.html', { 'rentals':rentals })
+    return redirect('home')
 # validated function
 
 def function(request):

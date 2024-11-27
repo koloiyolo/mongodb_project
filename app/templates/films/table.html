@@ -1,5 +1,3 @@
-<h3>Filmy</h3>
-
 <div class="accordion" id="accordionExample">
     <div class="accordion-item">
         <h2 class="accordion-header" id="heading">
@@ -61,7 +59,17 @@
                   Wypożycz
                 </a>
                 {% if user.is_staff %}
-                <a class="btn btn-dark" href={% url 'film_edit' film.id %}>
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <strong>Wypożycz jako</strong>
+                </button>
+                <ul class="dropdown-menu">
+                    {% if users %}
+                    {% for user in users %}
+                    <li><a class="dropdown-item" href="{% url 'film_rent_as' film.id user.id %}">{{user.username}}</a></li>
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+                <a class="btn btn-secondary" href={% url 'film_edit' film.id %}>
                   Edytuj
                 </a>
                 <a class="btn btn-danger" href={% url 'film_remove' film.id %}>

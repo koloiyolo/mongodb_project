@@ -20,6 +20,7 @@ urlpatterns = [
     # rentals
     path('rental/list', views.rental_list, name='rental_list'),
     path('film/rent<int:pk>', views.film_rent, name='film_rent'),
+    path('film/rent<int:film><int:user>', views.film_rent_as, name='film_rent_as'),
     path('film/return<int:pk>', views.film_return, name='film_return'),
     path('rental/user/list<int:pk>', views.rental_list_user, name='rental_list_user'),
 ]

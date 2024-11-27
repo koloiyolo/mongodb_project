@@ -1,5 +1,6 @@
 from djongo import models
 from django.utils import timezone
+from django.utils.timezone import now, timedelta
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -20,12 +21,12 @@ class Film(models.Model):
 
 class Rental(models.Model):
     rent_date = models.DateField(auto_now_add=True)
-    planned_return_date = models.DateField(auto_now_add=True)
+    planned_return_date = models.DateField(default=lambda: now().date() + timedelta(days=2))
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.film.title
+        return f"{self.user.username} rented {self.film.title}"
 
 class UserData(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
