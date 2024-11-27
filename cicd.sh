@@ -3,9 +3,9 @@
 # run using crontab
 
 # set env variable as 
-# PROJECT_PATH="/path/to/your/project"
+# export PROJECT_PATH="/path/to/your/project"
 
-PROJECT_PATH=${PROJECT_PATH:-"/default/path/to/your/project"}
+PROJECT_PATH=${PROJECT_PATH:-"/home/opc/mongodb_project"}
 
 cd "$PROJECT_PATH" || { echo "Directory not found at $PROJECT_PATH! Exiting..."; exit 1; }
 
