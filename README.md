@@ -25,8 +25,6 @@ Komendy wymagające podwyższonych uprawnień (wykorzystanie konta root, sudo) b
 ### Krok trzeci, uruchomeinie potoku CI/CD ###
 `$ export PROJECT_PATH="/path/to/mongodb_project"`
 
-`# chmod 755 cicd.sh`
-
 Pamiętaj o zmianie ścieżki przykładowej na ścieżkę całkowitą do pliku `cicd.sh`
 
 `# echo "* * * * * root /path/to/your/project/cicd.sh" >> /etc/crontab`
