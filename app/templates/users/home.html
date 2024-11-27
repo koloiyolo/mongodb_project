@@ -37,20 +37,20 @@
 
     {% else %}
     <br />
-    <h1>Log in</h1>
+    <h1>Zaloguj się</h1>
     <br />
     <form method="POST" action="{% url 'home' %}">
         {% csrf_token %}
         <div class="mb-3">
-            <label class="form-label">Your username</label>
+            <label class="form-label">Twoja nazwa użytkownika</label>
             <input type="text" class="form-control" name="username" placeholder="Your name" required />
         </div>
         <div class="mb-3">
-            <label class="form-label">Your password</label>
+            <label class="form-label">Twoje hasło</label>
             <input type="password" class="form-control" name="password" placeholder="Password" required />
         </div>
-        <button type="submit" class="btn btn-dark"> Log in </button>
-        <a class="btn btn-secondary" href="{% url 'register' %}"> Sign up instead </a>
+        <button type="submit" class="btn btn-dark"> Zaloguj się </button>
+        <a class="btn btn-secondary" href="{% url 'register' %}"> Zarejestruj się </a>
     </form>
     {% endif %}
 </div>

@@ -25,7 +25,7 @@ def home(request):
             return redirect('home')
 
         else:
-            messages.success(request, "Failed to log in, try again!")
+            messages.success(request, "Nieudana próba logowania, spróbuj ponownie!")
             return redirect('home')
 
     else:
@@ -34,7 +34,7 @@ def home(request):
 
 def user_logout(request):
     logout(request)
-    messages.success(request, "You have been logged out")
+    messages.success(request, "Wylogowano użytkownika")
     return redirect('home')
 
 def user_register(request):
@@ -48,7 +48,7 @@ def user_register(request):
             user = authenticate(request, username=username, password=password)
             UserData.objects.create(user=user)
             login(request, user)
-            messages.success(request, "You have successfuly created an account!")
+            messages.success(request, "Utworzono nowe konto!")
             return redirect('home')
         pass
     else:
