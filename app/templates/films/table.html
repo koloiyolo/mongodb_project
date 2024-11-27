@@ -15,8 +15,6 @@
                         <div class="col">Gatunek</div>
                         <div class="col">Reżyser</div>
                         <div class="col">Czas Trwania</div>
-                        <div class="col">Ocena</div>
-                        <div class="col">Data dodania</div>
                     </div>
                 </div>
             </button>
@@ -39,12 +37,6 @@
                         <div class="col">{{film.genre}}</div>
                         <div class="col">{{film.director}}</div>
                         <div class="col">{{film.duration}}</div>
-                        <div class="col">{{film.rating}}</div>
-                        {% comment %} 
-                        <div class="col">Opis</div>
-                        <div class="col">Aktorzy</div>
-                        {% endcomment %}
-                        <div class="col">{{film.added_on}}</div>
                     </div>
                 </div>
             </button>
@@ -52,7 +44,9 @@
         <div id="collapse{{ film.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
             <div class="accordion-body">
               <p><strong>Opis: </strong>{{film.description}}</p>
-              <p><strong>Aktorzy: </strong>Aktorzy</p>
+              <p><strong>Ocena: </strong>{{film.rating}}</p>
+              <p><strong>Aktorzy: </strong>{{film.actors}}</p>
+              <p><strong>Data dodania: </strong>{{film.added_on}}</p>
               <br/>
               <div class="col btn-group" role="group">
                 <a class="btn btn-dark" href={% url 'film_rent' film.id %}>
