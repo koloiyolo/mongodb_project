@@ -22,6 +22,7 @@ class Film(models.Model):
 class Rental(models.Model):
     rent_date = models.DateField(auto_now_add=True)
     planned_return_date = models.DateField(default=lambda: now().date() + timedelta(days=2))
+    return_date = models.DateField(null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
 

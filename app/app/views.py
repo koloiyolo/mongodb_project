@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.utils.timezone import now
 
 from .models import Film, Rental, UserData
 
@@ -13,9 +14,14 @@ from .models import Film, Rental, UserData
 def home(request):
     rentals = None
     films = Film.objects.all()
-
+    for film in films:
+        if Rental.objects.filter(film=film, return_date__isnull=True).exists():
+            film.stock = False
+        else:
+            film.stock = True
+            
     if request.user.is_authenticated:
-        rentals = Rental.objects.filter(user=request.user)
+        rentals = Rental.objects.filter(user=request.user, return_date__isnull=True)
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -70,6 +76,9 @@ def user_list(request):
                 ) | User.objects.filter(
                 last_name__icontains=q
                 )
+
+        for user in users:
+            user.userdata = UserData.objects.get(user=user)
 
         return render(request, 'users/list.html', { 'users':users})
     else:
@@ -132,6 +141,12 @@ def film_list(request):
                 genre__icontains=q
             )
 
+        for film in films:
+            if Rental.objects.filter(film=film, return_date__isnull=True).exists():
+                film.stock = False
+            else:
+                film.stock = True
+
         return render(request, 'films/list.html', { 
             'films':films,
             'users': users})
@@ -181,13 +196,13 @@ def film_remove(request, pk):
 
 def film_rent(request, pk):
     if request.user.is_authenticated:
-        if Rental.objects.filter(user=request.user).count() >= 3:
+        if Rental.objects.filter(user=request.user, return_date__isnull=True).count() >= 3:
             messages.success(request, "Użytkownik przekroczył limit wypożyczeń")
             return redirect('film_list')
 
         film = Film.objects.get(id=pk)
-        rental = Rental.objects.filter(user=request.user, film=film).first()
-        if rental is None:
+    
+        if Rental.objects.filter(user=request.user, film=film, return_date__isnull=True).exists() == False:
             Rental.objects.create(user=request.user, film=film)
             messages.success(request, "Film wypożyczony")
         else:
@@ -199,13 +214,12 @@ def film_rent(request, pk):
 def film_rent_as(request, film, user):
     if request.user.is_authenticated:
         user = User.objects.get(id=user)
-        if Rental.objects.filter(user=user).count() >= 3:
+        if Rental.objects.filter(user=user, return_date__isnull=True).count() >= 3:
             messages.success(request, "Użytkownik przekroczył limit wypożyczeń")
             return redirect('film_list')
 
         film = Film.objects.get(id=film)
-        rental = Rental.objects.filter(user=user, film=film).first()
-        if rental is None:
+        if Rental.objects.filter(user=user, film=film, return_date__isnull=True).exists() == False:
             Rental.objects.create(user=user, film=film)
             messages.success(request, "Film wypożyczony")
         else:
@@ -216,8 +230,9 @@ def film_rent_as(request, film, user):
 
 def film_return(request, pk):
     if request.user.is_authenticated:
-        delete_it = Rental.objects.get(id=pk)
-        delete_it.delete()
+        update_it = Rental.objects.get(id=pk)
+        update_it.return_date = now().date()
+        update_it.save()
         messages.success(request, "Film zwrócony")
         return redirect('rental_list')
     else:
@@ -225,7 +240,30 @@ def film_return(request, pk):
 
 def rental_list(request):
     if request.user.is_authenticated:
-        rentals = Rental.objects.all()
+        rentals = Rental.objects.all().order_by("-id")
+        users = User.objects.all()
+        q = request.GET.get('search', '')
+        if q:
+            rentals = rentals.filter(
+                Q(user__username__icontains=q) |
+                Q(user__first_name__icontains=q) |
+                Q(user__last_name__icontains=q) |
+                Q(film__title__icontains=q) |
+                Q(film__genre__icontains=q)
+            )
+            
+        
+        return render(request, 'rentals/list.html', {
+             'rentals':rentals,
+             'users':users
+             })
+    else:
+        return redirect('home')
+    return redirect('home')
+
+def rental_list_active(request):
+    if request.user.is_authenticated:
+        rentals = Rental.objects.filter(return_date__isnull=True).order_by("-id")
         users = User.objects.all()
         q = request.GET.get('search', '')
         if q:
@@ -250,7 +288,7 @@ def rental_list_user(request, pk):
     if request.user.is_authenticated:
         user = User.objects.get(id=pk)
         users = User.objects.all()
-        rentals = Rental.objects.filter(user=user)
+        rentals = Rental.objects.filter(user=user, return_date__isnull=True).order_by("-id")
         q = request.GET.get('search', '')
         if q:
             rentals = rentals.filter(

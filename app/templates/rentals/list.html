@@ -13,23 +13,20 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Film</th>
-            <th scope="col">
+            <th scope="col">Użytkownik</th>
+            <th scope="col">Data wypożyczena</th>
+            <th scope="col">Data planowanego zwrotu</th>
+            <th scope="col"> 
                 <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <strong>Użytkownik</strong>
+                    <strong>Zwrot</strong>
                     </button>
                     <ul class="dropdown-menu">
-                        {% if users %}
-                        {% for user in users %}
-                        <li><a class="dropdown-item" href="{% url 'rental_list_user' user.id %}">{{user.username}}</a></li>
-                        {% endfor %}
-                        {% endif %}
+                        <li><a class="dropdown-item" href="{% url 'rental_list_active' %}">Aktualne</a></li>
+                        <li><a class="dropdown-item" href="{% url 'rental_list'%}">Wszystkie</a></li>
                     </ul>
                 </div>
             </th>
-            <th scope="col">Data wypożyczena</th>
-            <th scope="col">Data planowanego zwrotu</th>
-            <th scope="col"> Zwrot </th>
         </tr>
     </thead>
     <tbody>
@@ -39,8 +36,12 @@
             <td scope="col-2"> {{rental.film}} </td>
             <td scope="col-2"> {{rental.user}} </td>
             <td scope="col-2"> {{rental.rent_date}} </td>
-            <td scope="col-2"> {{rental.planned_return_date}} a</td>
+            <td scope="col-2"> {{rental.planned_return_date}} </td>
+            {% if rental.return_date %}
+            <td scope="col-2"> {{rental.return_date}} </td>
+            {% else %}
             <td scope="col-2"><a class="btn btn-dark" href="{% url 'film_return' rental.id %}"> Zwrot </a></td>
+            {% endif %}
         </tr>
         {% endfor %}
     </tbody>
