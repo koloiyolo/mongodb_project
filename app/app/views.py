@@ -101,11 +101,13 @@ def user_edit(request, pk):
 def user_remove(request, pk):
     if request.user.is_authenticated:
         delete_it = User.objects.get(id=pk)
-        if request.user.id != delete_it.id:
+        if request.user.id == delete_it.id:
+            messages.success(request, "Nie można usunąć siebie")
+        elif Rental.objects.filter(user=delete_it, return_date__isnull = True).exists():
+            messages.success(request, "Użytkownik ma wypożyczone filmy")
+        else: 
             delete_it.delete()
             messages.success(request, "Użytkownik usunięty")
-        else: 
-            messages.success(request, "Nie można usunąć siebie")
         return redirect('user_list')
     else:
         return redirect('home')
@@ -184,7 +186,7 @@ def film_edit(request, pk):
 def film_remove(request, pk):
     if request.user.is_authenticated:
         delete_it = Film.objects.get(id=pk)
-        rental = Rental.objects.filter(film=film)
+        rental = Rental.objects.filter(film=delete_it)
         if rental is None:
             delete_it.delete()
             messages.success(request, "Film usunięty")
