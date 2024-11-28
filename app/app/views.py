@@ -186,8 +186,7 @@ def film_edit(request, pk):
 def film_remove(request, pk):
     if request.user.is_authenticated:
         delete_it = Film.objects.get(id=pk)
-        rental = Rental.objects.filter(film=delete_it)
-        if rental is None:
+        if Rental.objects.filter(film=delete_it, return_date__isnull=True).exists() is False:
             delete_it.delete()
             messages.success(request, "Film usunięty")
         else: 
