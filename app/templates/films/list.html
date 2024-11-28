@@ -3,9 +3,11 @@
 <h3>Filmy</h3>
 <br/>
 <div class="input-group">
+  {% if user.is_staff %}
   <a class="btn btn-dark" href="{% url 'film_add' %}">
     Dodaj
   </a>
+  {% endif %}
   <form method="get">
     <div class="input-group">
       <input type="text" name="search" value="{{ q }}" placeholder=" Wyszukaj">

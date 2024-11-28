@@ -38,7 +38,11 @@
                         <div class="col">{{film.genre}}</div>
                         <div class="col">{{film.director}}</div>
                         <div class="col">{{film.duration}}</div>
-                        <div class="col">{{film.stock}}</div>
+                        {% if film.stock %}
+                        <div class="col">Tak</div>
+                        {% else %}
+                        <div class="col">Nie</div>
+                        {% endif %}
                     </div>
                 </div>
             </button>
@@ -65,6 +69,7 @@
                     {% endfor %}
                     {% endif %}
                 </ul>
+                <div style="width:16px;"></div>
                 <a class="btn btn-secondary" href={% url 'film_edit' film.id %}>
                   Edytuj
                 </a>

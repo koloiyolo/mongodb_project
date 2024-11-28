@@ -1,0 +1,187 @@
+[{
+  "_id": {
+    "$oid": "674892dd20ac35d7676542ff"
+  },
+  "id": 5,
+  "title": "Carmencita",
+  "genre": "Documentary",
+  "director": "William K.L. Dickson",
+  "duration": 1,
+  "rating": 5.8,
+  "description": "tánc\",\"Region\":\"HU\"}]",
+  "actors": "tánc\",\"Region\":\"HU\"}]",
+  "added_on": {
+    "$date": "2024-11-28T15:57:17.830Z"
+  },
+  "available": true
+},
+{
+  "_id": {
+    "$oid": "6748930620ac35d767654300"
+  },
+  "id": 6,
+  "title": "Inception",
+  "genre": "Science Fiction",
+  "director": "Christopher Nolan",
+  "duration": 148,
+  "rating": 8.8,
+  "description": "A mind-bending thriller where dream invasion blurs the lines between reality and illusion.",
+  "actors": "Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page",
+  "added_on": {
+    "$date": "2024-11-28T15:57:58.894Z"
+  },
+  "available": true
+},
+{
+  "_id": {
+    "$oid": "6748932e20ac35d767654301"
+  },
+  "id": 7,
+  "title": "The Godfather",
+  "genre": "Crime",
+  "director": "Francis Ford Coppola",
+  "duration": 175,
+  "rating": 9.2,
+  "description": "The saga of the Corleone family, a powerful New York crime family.",
+  "actors": "Marlon Brando, Al Pacino, James Caan",
+  "added_on": {
+    "$date": "2024-11-28T15:58:38.621Z"
+  },
+  "available": true
+},
+{
+  "_id": {
+    "$oid": "6748935520ac35d767654302"
+  },
+  "id": 8,
+  "title": "The Matrix",
+  "genre": "Action",
+  "director": "Lana Wachowski, Lilly Wachowski",
+  "duration": 136,
+  "rating": 8.7,
+  "description": "A hacker discovers the reality he knows is a simulation controlled by machines.",
+  "actors": "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss",
+  "added_on": {
+    "$date": "2024-11-28T15:59:17.537Z"
+  },
+  "available": true
+},
+{
+  "_id": {
+    "$oid": "6748937920ac35d767654303"
+  },
+  "id": 9,
+  "title": "Parasite",
+  "genre": "Thriller",
+  "director": "Bong Joon-ho",
+  "duration": 132,
+  "rating": 8.6,
+  "description": "A poor family infiltrates a wealthy household in a tale of class disparity.",
+  "actors": "Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong",
+  "added_on": {
+    "$date": "2024-11-28T15:59:53.230Z"
+  },
+  "available": true
+},
+{
+  "_id": {
+    "$oid": "6748939a20ac35d767654304"
+  },
+  "id": 10,
+  "title": "The Lion King",
+  "genre": "Animation",
+  "director": "Roger Allers, Rob Minkoff",
+  "duration": 88,
+  "rating": 8.5,
+  "description": "A lion cub’s journey to reclaim his destiny as king of the Pride Lands.",
+  "actors": "Matthew Broderick, Jeremy Irons, James Earl Jones",
+  "added_on": {
+    "$date": "2024-11-28T16:00:26.843Z"
+  },
+  "available": true
+},
+{
+  "_id": {
+    "$oid": "674893d620ac35d767654305"
+  },
+  "id": 11,
+  "title": "Titanic",
+  "genre": "Romance",
+  "director": "James Cameron",
+  "duration": 195,
+  "rating": 7.9,
+  "description": "A love story set on the ill-fated voyage of the Titanic.",
+  "actors": "Leonardo DiCaprio, Kate Winslet, Billy Zane",
+  "added_on": {
+    "$date": "2024-11-28T16:01:26.144Z"
+  },
+  "available": true
+},
+{
+  "_id": {
+    "$oid": "674893f420ac35d767654306"
+  },
+  "id": 12,
+  "title": "Pulp Fiction",
+  "genre": "Drama",
+  "director": "Quentin Tarantino",
+  "duration": 154,
+  "rating": 8.9,
+  "description": "Interweaving tales of crime and redemption in Los Angeles.",
+  "actors": "John Travolta, Uma Thurman, Samuel L. Jackson",
+  "added_on": {
+    "$date": "2024-11-28T16:01:56.772Z"
+  },
+  "available": true
+},
+{
+  "_id": {
+    "$oid": "6748943520ac35d767654307"
+  },
+  "id": 13,
+  "title": "The Shawshank Redemption",
+  "genre": "Drama",
+  "director": "Frank Darabont",
+  "duration": 142,
+  "rating": 9.3,
+  "description": "A man imprisoned for a crime he didn’t commit finds hope behind bars.",
+  "actors": "Tim Robbins, Morgan Freeman, Bob Gunton",
+  "added_on": {
+    "$date": "2024-11-28T16:03:01.297Z"
+  },
+  "available": true
+},
+{
+  "_id": {
+    "$oid": "6748945820ac35d767654308"
+  },
+  "id": 14,
+  "title": "Spirited Away",
+  "genre": "Fantasy",
+  "director": "Hayao Miyazaki",
+  "duration": 125,
+  "rating": 8.6,
+  "description": "A young girl is trapped in a mysterious spirit world in a beautiful adventure.",
+  "actors": "Rumi Hiiragi, Miyu Irino, Mari Natsuki",
+  "added_on": {
+    "$date": "2024-11-28T16:03:36.127Z"
+  },
+  "available": true
+},
+{
+  "_id": {
+    "$oid": "6748948c20ac35d767654309"
+  },
+  "id": 15,
+  "title": "Interstellar",
+  "genre": "Science Fiction",
+  "director": "Christopher Nolan",
+  "duration": 169,
+  "rating": 8.6,
+  "description": "A team of explorers travels through a wormhole to save humanity.",
+  "actors": "Matthew McConaughey, Anne Hathaway, Jessica Chastain",
+  "added_on": {
+    "$date": "2024-11-28T16:04:28.820Z"
+  },
+  "available": true
+}]

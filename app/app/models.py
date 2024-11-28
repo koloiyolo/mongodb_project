@@ -11,8 +11,8 @@ class Film(models.Model):
     director = models.CharField(max_length=255)
     duration = models.IntegerField(help_text="Duration in minutes")
     rating = models.FloatField(help_text="Rating from 1 to 10")
-    description = models.TextField()
-    actors = models.TextField()
+    description = models.TextField(blank=True)
+    actors = models.TextField(blank=True)
     added_on = models.DateTimeField(default=timezone.now)
     available = models.BooleanField(default=True)
 
