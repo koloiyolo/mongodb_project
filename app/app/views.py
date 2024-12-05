@@ -203,7 +203,7 @@ def film_rent(request, pk):
 
         film = Film.objects.get(id=pk)
     
-        if Rental.objects.filter(user=request.user, film=film, return_date__isnull=True).exists() == False:
+        if Rental.objects.filter(film=film, return_date__isnull=True).exists() == False:
             Rental.objects.create(user=request.user, film=film)
             messages.success(request, "Film wypożyczony")
         else:
@@ -220,7 +220,7 @@ def film_rent_as(request, film, user):
             return redirect('film_list')
 
         film = Film.objects.get(id=film)
-        if Rental.objects.filter(user=user, film=film, return_date__isnull=True).exists() == False:
+        if Rental.objects.filter(film=film, return_date__isnull=True).exists() == False:
             Rental.objects.create(user=user, film=film)
             messages.success(request, "Film wypożyczony")
         else:
